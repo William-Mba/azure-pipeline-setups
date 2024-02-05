@@ -1,0 +1,37 @@
+version: "3"
+
+name: azp-agents
+
+services:
+  agent01:
+    image: ${IMAGE_TAG}
+    restart: always
+    container_name: agent01
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro" #only needed if your agent will run docker command
+    environment:
+      - "AZP_URL=${AZP_URL}"
+      - "AZP_TOKEN=${AZP_TOKEN}"
+      - "AZP_POOL=${AZP_POOL}"
+      - "AZP_AGENT_NAME=agent01"
+
+  agent02:
+    extends:
+      service: agent01
+    container_name: agent02
+    environment:
+      - "AZP_AGENT_NAME=agent02"
+
+  agent03:
+    extends:
+      service: agent01
+    container_name: agent03
+    environment:
+      - "AZP_AGENT_NAME=agent03"
+
+  agent04:
+    extends:
+      service: agent01
+    container_name: agent04
+    environment:
+      - "AZP_AGENT_NAME=agent04"
